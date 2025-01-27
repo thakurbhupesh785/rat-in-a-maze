@@ -17,6 +17,7 @@ void solve(int x,int y,vector <vector<int>>& m,int n,vector <vector<int>>& visit
         return;
     }
     //change the value of visited from 0 to 1
+    // jha jha hmara x,y jayga
     visited [x][y] = 1;
     
     //down
@@ -60,10 +61,10 @@ int main() {
     cout<<"enter the elemnets of m: \n";
     for(int i=0;i<n;i++){
         vector <int>temp(n);
-    for (int j = 0; j < n; j++) {
+      for (int j = 0; j < n; j++) {
         cin >> temp[j]; // Row ke har column ka input le rahe ho
-    }
-    m.push_back(temp);// Puri row ko maze ke andar add kar diya
+      }
+      m.push_back(temp);// Puri row ko maze ke andar add kar diya
     }
 
      cout << "Maze is:\n";
