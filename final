@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+using namespace std;
+//solve(0,0,m,n,visited,path,ans)
+
+bool isSafe(int x,int y,vector <vector<int>>& m,int n,vector <vector<int>>& visited){
+    if((x>=0 && x<n) && (y>=0 && y<n) && visited[x][y] == 0 && m[x][y] == 1 ){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void solve(int x,int y,vector <vector<int>>& m,int n,vector <vector<int>>& visited,string path,vector<string>& ans){
+    //base case
+    if(x==n-1 && y==n-1){
+        ans.push_back(path);
+        return;
+    }
+    //change the value of visited from 0 to 1
+    visited [x][y] = 1;
+    
+    //down
+    if(isSafe(x+1,y,m,n,visited)){
+        path.push_back('D');
+        solve(x+1,y,m,n,visited,path,ans);
+        path.pop_back();
+    }
+
+    //up
+    if(isSafe(x-1,y,m,n,visited)){
+        path.push_back('U');
+        solve(x-1,y,m,n,visited,path,ans);
+        path.pop_back();
+    }
+
+    //left
+    if(isSafe(x,y-1,m,n,visited)){
+        path.push_back('L');
+        solve(x,y-1,m,n,visited,path,ans);
+        path.pop_back();
+    }
+
+    //right
+    if(isSafe(x,y+1,m,n,visited)){
+        path.push_back('R');
+        solve(x,y+1,m,n,visited,path,ans);
+        path.pop_back();
+    }
+
+    //changing again back to 0 ,so we can find other paths
+    visited [x][y] = 0;
+}
+
+int main() {
+    int n;
+    cout<<"enter the row and col : ";
+    cin>> n;
+
+    vector <vector<int>> m;
+    cout<<"enter the elemnets of m: \n";
+    for(int i=0;i<n;i++){
+        vector <int>temp(n);
+    for (int j = 0; j < n; j++) {
+        cin >> temp[j]; // Row ke har column ka input le rahe ho
+    }
+    m.push_back(temp);// Puri row ko maze ke andar add kar diya
+    }
+
+     cout << "Maze is:\n";
+    
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cout<<m [i][j]; 
+        }
+        cout<<endl;
+    }
+
+    // visited vala 2d array n rows cols ka
+    vector <vector<int>> visited(n,vector<int>(n,0));
+    vector <string> ans; //ans store krne k liye
+
+    if(m[0][0] == 0 || m[n-1][n-1] == 0) {
+    cout << "No possible path.\n";
+    return 0;
+    }
+
+    string path; // path store k liye
+    solve(0,0,m,n,visited,path,ans); //function call
+    sort(ans.begin(),ans.end()); // sort 
+    
+    //printing possible paths
+    cout << "All possible paths : " << endl;
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<endl;
+    }
+
+
+    return 0;
+}
+//// 1 0 0 0 1 1 0 1 1 1 0 0 0 1 1 1
